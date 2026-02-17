@@ -1,0 +1,39 @@
+services:
+  kafka:
+    image: confluentinc/cp-kafka:8.1.1
+    container_name: kafka
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+    environment:
+      KAFKA_KRAFT_MODE: 'true'
+      CLUSTER_ID: 'domain-auth-cluster-1'
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
+    volumes:
+      - kafka_kraft:/var/lib/kafka/data
+
+volumes:
+  kafka_kraft:
+
+# docker-compose up
+# docker ps # shows that our kafka is running
+# docker exec -it kafka kafka-topics --describe --topic domain-auth --bootstrap-server localhost:9092 # create topic domain-auth
+# docker exec -it kafka kafka-topics --create --topic domain-auth --partitions 1 --replication-factor 1 --bootstrap-server localhost:9092 # adds a new topic with number of partitions
+# docker exec -it kafka kafka-topics --create --topic notification-service --partitions 1 --replication-factor 1 --bootstrap-server localhost:9092 # adds a new topic with number of partitions
+# docker exec -it kafka kafka-topics --list --bootstrap-server localhost:9092 # lists all topics 
+# docker exec -it kafka kafka-topics --delete --topic domain-auto --bootstrap-server localhost:9092 # delete topic
+# docker exec -it kafka kafka-console-consumer --bootstrap-server localhost:9092 --topic domain-auth --partition 0 --offset 0 # view all events in topic
+# docker exec -it kafka kafka-console-consumer --bootstrap-server localhost:9092 --topic domain-auth --from-beginning # view all events in topic
+# docker exec -it kafka kafka-console-consumer --bootstrap-server localhost:9092 --topic domain-auth --partition 0 --offset 0 --property isolation.level=read_committed # view only committed events in topic

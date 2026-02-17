@@ -1,0 +1,78 @@
+{
+    "happyFlow": {
+        "sagaId": "stringIDToBeSet",                
+        "eventType": "AuthenticateDomain.Init",  
+        "timestamp": "timestampToBeSet",          
+        "payload": {
+            "domain": "success.com",
+            "userId": "user789",
+            "requesterEmail": "user@success.com"
+        }   
+    }, 
+    "failSendGrid": {
+        "sagaId": "stringIDToBeSet",                
+        "eventType": "AuthenticateDomain.Init",  
+        "timestamp": "timestampToBeSet",          
+        "payload": {
+            "domain": "failSendGrid.com",
+            "userId": "user789",
+            "requesterEmail": "user@failSendGrid.com"
+        },
+        "futureError": {
+            "errorService": "SendGrid"
+        } 
+    }, 
+    "failRoute53": {
+        "sagaId": "stringIDToBeSet",                
+        "eventType": "AuthenticateDomain.Init",  
+        "timestamp": "timestampToBeSet",          
+        "payload": {
+            "domain": "failRoute53.com",
+            "userId": "user789",
+            "requesterEmail": "user@failRoute53.com"
+        },
+        "futureError": {
+            "errorService": "Route53"
+        } 
+    },  
+    "failDB": {
+        "sagaId": "stringIDToBeSet",                
+        "eventType": "AuthenticateDomain.Init",  
+        "timestamp": "timestampToBeSet",          
+        "payload": {
+            "domain": "failDB.com",
+            "userId": "user789",
+            "requesterEmail": "user@failDB.com"
+        },
+        "futureError": {
+            "errorService": "DB"
+        } 
+    },  
+    "failRoute53_failSendGridCompensation_DLQ": {
+        "sagaId": "stringIDToBeSet",                
+        "eventType": "AuthenticateDomain.Init",  
+        "timestamp": "timestampToBeSet",          
+        "payload": {
+            "domain": "failRoute53_failSendGridCompensation_DLQ.com",
+            "userId": "user789",
+            "requesterEmail": "user@failRoute53_failSendGridCompensation_DLQ.com"
+        },
+        "futureError": {
+            "errorService": "Route53",
+            "errorServiceCompensation": "SendGrid"
+        } 
+    },
+    "sendGridTransactionFail": {
+        "sagaId": "stringIDToBeSet",                
+        "eventType": "AuthenticateDomain.Init",  
+        "timestamp": "timestampToBeSet",          
+        "payload": {
+            "domain": "failSendGridTransaction.com",
+            "userId": "user789",
+            "requesterEmail": "user@failSendGridTransaction.com"
+        },
+        "futureError": {
+            "errorTransaction": "SendGrid"
+        } 
+    }
+}
