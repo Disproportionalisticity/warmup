@@ -1,0 +1,22 @@
+services:
+  school-service:
+    build: .
+    image: school-service-java:latest
+    container_name: school-service-java
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-school:5432/school
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=password
+    networks:
+      - school
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.5'
+
+networks:
+  school:
+    external: true
